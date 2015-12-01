@@ -5,20 +5,43 @@
 		<script type="text/javascript" src="js/FileSaver.min.js"></script>
 		<script type="text/javascript" src="js/jszip.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+		<style>
+			.fileUpload {
+			    position: relative;
+			    overflow: hidden;
+			    margin: 10px;
+			}
+			.fileUpload input.upload {
+			    position: absolute;
+			    top: 0;
+			    right: 0;
+			    margin: 0;
+			    padding: 0;
+			    font-size: 20px;
+			    cursor: pointer;
+			    opacity: 0;
+			    filter: alpha(opacity=0);
+			}
+		</style>
 	</head>
 	<body>
 		<div class="row">
 			<div class="large-6 small-centered columns">
-				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" multiple>
+				<div class="row">
+					<div class="fileUpload button small-3 small-centered columns">
+	    				<span>Choose Files</span>
+	    				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" multiple>
+					</div>
+				</div>
 				<div class="row">
 					<div class="medium-3 columns">
-						<label class="right inline" for="width" style="text-align:right;">Width [px]: </label>
+						<label class="right inline" for="width">Width [px]: </label>
 					</div>
 					<div class="medium-3 columns">
 						<input type="number" name="width" id="width" autocomplete="off" value="1920"/>
 					</div>
 					<div class="medium-3 columns">
-						<label class="right inline" for="height" style="text-align:right;">Height [px]: </label>
+						<label class="right inline" for="height">Height [px]: </label>
 					</div>
 					<div class="medium-3 columns">
 						<input type="number" name="height" id="height" autocomplete="off" value="1080"/>
@@ -26,7 +49,7 @@
 				</div>
 				<div class="row">
 					<div class='small-3 columns'>
-						<label class="right inline" for="height" style="text-align:right;">Compression [%]:</label>
+						<label class="right inline" for="height">Compression [%]:</label>
 					</div>
 					<div class='small-7 columns'>
 						<div class="slider" data-slider data-initial-start='80' >
