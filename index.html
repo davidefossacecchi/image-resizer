@@ -2,6 +2,7 @@
 	<head>
 		<!--Web App that permits to load a banch of local images and resize them-->
 		<title>Image Resizer</title>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 		<script type="text/javascript" src="js/FileSaver.min.js"></script>
 		<script type="text/javascript" src="js/jszip.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
@@ -22,15 +23,20 @@
 			    opacity: 0;
 			    filter: alpha(opacity=0);
 			}
+			#thumbnails > img{
+				width: 20%;
+				margin: 2%;
+				float: left;
+			}
 		</style>
 	</head>
-	<body>
+	<body ng-app="imageResizer" ng-controller="irController">
 		<div class="row">
 			<div class="large-6 small-centered columns">
 				<div class="row">
 					<div class="fileUpload button small-3 small-centered columns">
 	    				<span>Choose Files</span>
-	    				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" multiple>
+	    				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" fileread = "images" multiple>
 					</div>
 				</div>
 				<div class="row">
@@ -53,7 +59,7 @@
 					</div>
 					<div class='small-7 columns'>
 						<div class="slider" data-slider data-initial-start='80' >
-							<span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls='compression'></span>
+							<span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls='compression'></span>
 							<span class="slider-fill" data-slider-fill></span>
 						</div>
 					</div>
@@ -69,9 +75,56 @@
 				</div>
 			</div>
 		</div>
+		<div id="thumbnails">
+			<img class="thumbnail" ng-repeat="image in images" src="{{image.src}}" />
+		</div>
 		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
 		<script type="text/javascript" src="js/vendor/what-input.min.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"> </script>
 		<script>$(document).foundation()</script>
+		<script>
+			var resizer = angular.module("imageResizer", []);
+
+			resizer.directive("fileread", [function () {
+			    return {
+			        scope: {
+			            fileread: "="
+			        },
+			        link: function (scope, element, attributes) {
+			            element.bind("change", function (changeEvent) {
+							var fileList = element[0].files;
+							//console.log(element[0].files);
+							var c = 0;
+							scope.fileread = [];
+							//use a self-invoking to draw images in canvases and wait to complete the drawing before passing to the next image.
+							(function draw(){
+								var img = new Image();
+								var reader = new FileReader();
+								
+								reader.onload = function(e){
+									img.src = e.target.result;
+								}
+								img.onload = function(){
+									scope.$apply(function () {
+	                        			scope.fileread[c] = img;
+	                        			//console.log(scope.fileread);
+	                    			});
+									c++;
+									if (c<fileList.length) draw();
+								}
+								reader.readAsDataURL(fileList[c]);	
+							})();
+
+			            	
+			            });
+			        }
+			    }
+			}]);
+
+			resizer.controller("irController", ["$scope", function($scope){
+				$scope.images;
+			}]);
+		</script>
 	</body>
 </html>
