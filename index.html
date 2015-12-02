@@ -23,10 +23,16 @@
 			    opacity: 0;
 			    filter: alpha(opacity=0);
 			}
+			#iterations{
+				display: none;
+			}
 			#thumbnails > img{
 				width: 20%;
 				margin: 2%;
 				float: left;
+			}
+			#thumbnails{
+				margin: auto;
 			}
 		</style>
 	</head>
@@ -44,13 +50,13 @@
 						<label class="right inline" for="width">Width [px]: </label>
 					</div>
 					<div class="medium-3 columns">
-						<input type="number" name="width" id="width" autocomplete="off" value="1920"/>
+						<input type="number" name="width" id="width" autocomplete="off" value="1920" ng-model="width"/>
 					</div>
 					<div class="medium-3 columns">
 						<label class="right inline" for="height">Height [px]: </label>
 					</div>
 					<div class="medium-3 columns">
-						<input type="number" name="height" id="height" autocomplete="off" value="1080"/>
+						<input type="number" name="height" id="height" autocomplete="off" value="1080" ng-model="height"/>
 					</div>
 				</div>
 				<div class="row">
@@ -64,20 +70,24 @@
 						</div>
 					</div>
 					<div class='small-2 columns'>
-					  	<input type="number" id='compression'>
+					  	<input type="number" id='compression' ng-model="compression">
 					</div>
 				</div>
 				<div class="row">
 					<div class="medium-5 small-centered columns">
-						<button class="button" type="button" id="go">Resize</button>
-						<button class="button" type="button" id="save">Save</button>
+						<button class="button" type="button" id="go" ng-click="resize()">Resize</button>
+						<button class="button" type="button" id="save" ng-click="save()">Save</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="thumbnails">
-			<img class="thumbnail" ng-repeat="image in images" src="{{image.src}}" />
+			<img class="thumbnail" ng-repeat="image in images" src="{{image.src}}"/>
 		</div>
+		<div id="iterations">
+			<canvas draw="image" ng-repeat="image in images"></canvas>
+		</div>
+		
 		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
 		<script type="text/javascript" src="js/vendor/what-input.min.js"></script>
 		<script type="text/javascript" src="js/foundation.min.js"></script>
@@ -86,7 +96,7 @@
 		<script>
 			var resizer = angular.module("imageResizer", []);
 
-			resizer.directive("fileread", [function () {
+			resizer.directive("fileread", function () {
 			    return {
 			        scope: {
 			            fileread: "="
@@ -120,10 +130,47 @@
 			            });
 			        }
 			    }
-			}]);
+			});
 
 			resizer.controller("irController", ["$scope", function($scope){
 				$scope.images;
+				$scope.height = 1080;
+				$scope.width = 1920;
+				$scope.compression = 80;
+				$scope.resize = function(){
+					var canvases = document.getElementsByTagName("canvas");
+					var i = 0;
+					var p_height, p_width;
+					(function scale(){
+						var the_canvas = canvases[i];
+						var img = new Image();
+						img.onload = function(){
+							
+							p_height = Math.abs(img.height - $scope.height) / img.height;
+							p_width = Math.abs(img.width - $scope.width) / img.width;
+							
+							var aspect_ratio = img.width / img.height; //width on height
+							
+							if(p_height < p_width){
+								img.height = the_canvas.height = $scope.height;
+								img.width = the_canvas.width = aspect_ratio * $scope.height;
+							}
+							else{
+								img.height = the_canvas.height = $scope.width / aspect_ratio; 
+								img.width = the_canvas.width = $scope.width;
+							}
+							
+							
+							
+							var ctx = the_canvas.getContext("2d");
+							console.log("disegno l'immagine");
+							ctx.drawImage(img,0,0,img.width,img.height);
+							i++;
+							if(i<canvases.length) scale();
+						}
+						img.src = $scope.images[i].src;
+					})();
+				}
 			}]);
 		</script>
 	</body>
