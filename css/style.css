@@ -1,0 +1,42 @@
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#iterations{
+	display: none;
+}
+#thumbnails > h3{
+	margin-left: 2%;
+}
+#thumbnails > img{
+	width: 20%;
+	margin: 2%;
+	float: left;
+}
+#thumbnails{
+	margin: auto;
+}
+input:invalid{
+	border: 1px solid #ff0000;
+	box-shadow: inset 0 0 2px #ff0000;
+}
+
+input:invalid:focus{
+	border: 1px solid #ff0000;
+	box-shadow: 0 0 5px #ff0000;
+}
+body{
+	padding:0 10px;
+}
