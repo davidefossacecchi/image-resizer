@@ -26,6 +26,9 @@
 			#iterations{
 				display: none;
 			}
+			#thumbnails > h3{
+				margin-left: 2%;
+			}
 			#thumbnails > img{
 				width: 20%;
 				margin: 2%;
@@ -38,30 +41,47 @@
 	</head>
 	<body ng-app="imageResizer" ng-controller="irController">
 		<div class="row">
-			<div class="large-6 small-centered columns">
+			<div class="medium-6 small-centered columns">
 				<div class="row">
 					<div class="fileUpload button small-3 small-centered columns">
 	    				<span>Choose Files</span>
 	    				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" fileread = "images" multiple>
 					</div>
+					<div class="small-9 columns">
+						<div class="row" style="padding-top:11px;">
+							<div class="small-3 columns">
+								<label class="text-right middle" for="width">Save as:</label>
+							</div>
+						    <div class="small-9 columns">
+						    	<div class="input-group">
+						    		<input class="input-group-field" type="text" name="zip" ng-model="zipname">
+						    		<span class="input-group-label">.zip</span>
+						    	</div>
+						    </div>
+						</div>
+					</div>
 				</div>
 				<div class="row">
-					<div class="medium-3 columns">
-						<label class="right inline" for="width">Width [px]: </label>
+					<div class="medium-6 small-12 columns">
+						<div class="small-6 columns">
+							<label class="text-right middle" for="width">Width [px]: </label>
+						</div>
+						<div class="small-6 columns">
+							<input type="number" name="width" id="width" autocomplete="off" value="1920" ng-model="width"/>
+						</div>
 					</div>
-					<div class="medium-3 columns">
-						<input type="number" name="width" id="width" autocomplete="off" value="1920" ng-model="width"/>
-					</div>
-					<div class="medium-3 columns">
-						<label class="right inline" for="height">Height [px]: </label>
-					</div>
-					<div class="medium-3 columns">
-						<input type="number" name="height" id="height" autocomplete="off" value="1080" ng-model="height"/>
+					<div class="medium-6 small-12 columns">
+						<div class="small-6 columns">
+							<label class="text-right middle" for="height">Height [px]: </label>
+						</div>
+						<div class="small-6 columns">
+							<input type="number" name="height" id="height" autocomplete="off" value="1080" ng-model="height"/>
+						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class='small-3 columns'>
-						<label class="right inline" for="height">Compression [%]:</label>
+						<label class="text-right middle">Compression [%]:</label>
 					</div>
 					<div class='small-7 columns'>
 						<div class="slider" data-slider data-initial-start='80' >
@@ -74,7 +94,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="medium-5 small-centered columns">
+					<div class="small-5 small-centered columns">
 						<button class="button" type="button" id="go" ng-click="resize()">Resize</button>
 						<button class="button" type="button" id="save" ng-click="save()">Save</button>
 					</div>
@@ -82,6 +102,7 @@
 			</div>
 		</div>
 		<div id="thumbnails">
+			<h3 ng-if="images.length > 0">Your Pictures</h2>
 			<img class="thumbnail" ng-repeat="image in images" src="{{image.src}}"/>
 		</div>
 		<div id="iterations">
@@ -137,6 +158,8 @@
 				$scope.height = 1080;
 				$scope.width = 1920;
 				$scope.compression = 80;
+				$scope.zipname = "output";
+
 				$scope.resize = function(){
 					var canvases = document.getElementsByTagName("canvas");
 					var i = 0;
@@ -170,7 +193,31 @@
 						}
 						img.src = $scope.images[i].src;
 					})();
-				}
+				};
+
+				$scope.save = function(){
+					var canvases = document.getElementsByTagName("canvas");
+					var zip = new JSZip();
+					var compression = Math.round($scope.compression)/100;
+					var i = 0;
+					(function write(){
+						var the_canvas = canvases[i];
+						var img = new Image();
+						img.onload = function(){
+							var index = img.src.indexOf(",");
+							var data = img.src.substring(index + 1, img.src.length);
+							zip.file("image"+i+".jpeg",data,{base64:true});
+							i++;
+							if(i<canvases.length) write();
+							else{
+								var content = zip.generate({type:"blob"});
+								saveAs(content, $scope.zipname + ".zip");
+							}
+						}
+						img.src = the_canvas.toDataURL("image/jpeg", compression);
+					})();
+
+				};
 			}]);
 		</script>
 	</body>
