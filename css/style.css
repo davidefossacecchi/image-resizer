@@ -37,6 +37,6 @@ input:invalid:focus{
 	border: 1px solid #ff0000;
 	box-shadow: 0 0 5px #ff0000;
 }
-body{
-	padding:0 10px;
+.wrapper{
+	padding:10px 10px;
 }
