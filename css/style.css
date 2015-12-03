@@ -40,3 +40,12 @@ input:invalid:focus{
 .wrapper{
 	padding:10px 10px;
 }
+
+.top-bar-left > img{
+	width: 25px;
+	margin:3px;
+}
+
+.top-bar-left > h5{
+	display: inline;
+}
