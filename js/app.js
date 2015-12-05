@@ -34,12 +34,41 @@ resizer.directive("fileread", function () {
     }
 });
 
-resizer.controller("irController", ["$scope", function($scope){
+resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 	$scope.images = [];
 	$scope.height = 1080;
 	$scope.width = 1920;
 	$scope.compression = 80;
 	$scope.zipname = "output";
+	$scope.currentYear = new Date().getFullYear();
+	$scope.year = $scope.currentYear - 5;
+	$scope.brands = [];
+	$scope.models = [];
+	$scope.err = "";
+
+	var timeoutval = 4000
+
+	var startTime = new Date().getTime();
+	
+	$http.get("car-server.php/brands", {timeout: timeoutval}).then(function successCallback(response) {
+		    $scope.brands = response.data;
+		  }, function errorCallback(response) {
+		  	var respTime = new Date().getTime();
+		  	if(respTime > startTime + timeoutval) $scope.err = "Can't retrieve cars data, please check your connection and try again";
+		  	else  $scope.err = "Oops, an error occured while retrieving cars data, please try again";
+		  });
+
+	$scope.getModels = function(){
+		$scope.models = [];
+		startTime = new Date().getTime();
+		$http.get("car-server.php/"+$scope.choosenBrand+"/models", {timeout: timeoutval}).then(function successCallback(response) {
+		    $scope.models = response.data;
+		  }, function errorCallback(response) {
+		  	var respTime = new Date().getTime();
+		  	if(respTime > startTime + timeoutval) $scope.err = "Can't retrieve cars data, please check your connection and try again";
+		    else  $scope.err = "Oops, an error occured while retrieving cars data, please try again";
+		  });
+	}
 	
 	$scope.resize = function(){
 		var canvases = document.getElementsByTagName("canvas");
@@ -92,6 +121,7 @@ resizer.controller("irController", ["$scope", function($scope){
 		var canvases = document.getElementsByTagName("canvas");
 		var zip = new JSZip();
 		var compression = Math.round($scope.compression)/100;
+		alert(compression);
 		var i = 0;
 		(function write(){
 			var the_canvas = canvases[i];
@@ -104,7 +134,7 @@ resizer.controller("irController", ["$scope", function($scope){
 				if(i<canvases.length) write();
 				else{
 					var content = zip.generate({type:"blob"});
-					saveAs(content, $scope.zipname + ".zip");
+					saveAs(content, $scope.choosenBrand+"-"+$scope.choosenModel+"-"+$scope.year+".zip");
 				}
 			}
 			img.src = the_canvas.toDataURL("image/jpeg", compression);
