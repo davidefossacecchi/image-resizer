@@ -40,7 +40,7 @@ resizer.controller("irController", ["$scope", function($scope){
 	$scope.width = 1920;
 	$scope.compression = 80;
 	$scope.zipname = "output";
-
+	
 	$scope.resize = function(){
 		var canvases = document.getElementsByTagName("canvas");
 		var i = 0;
