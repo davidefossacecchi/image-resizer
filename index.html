@@ -106,22 +106,22 @@
 							<!--brand selector-->
 							<div class="large-4 columns">
 								<div class="row" style="padding-top:11px;">
-									<div class="small-3 columns">
+									<div class="large-3 small-1 columns">
 										<label class="text-right middle" for="brand">Brand:</label>
 									</div>
-								    <div class="small-9 columns">
+								    <div class="large-9 small-11 columns">
 							    		<select ng-change = "getModels()" ng-model="choosenBrand" name="brand" ng-options="brand as brand for brand in brands" required></select>
 								    </div>
 								</div>
 							</div>
 
 							<!--model selector-->
-							<div class="large-3 columns">
+							<div class="large-4 columns">
 								<div class="row" style="padding-top:11px;">
-									<div class="small-3 columns">
+									<div class="large-3 small-1 columns">
 										<label class="text-right middle" for="model">Model:</label>
 									</div>
-								    <div class="small-9 columns">
+								    <div class="large-9 small-11 columns">
 								    		<select ng-model="choosenModel" name="model" ng-options="model as model for model in models" ng-disabled="models.length < 1" required></select>
 								    </div>
 								</div>
@@ -130,10 +130,10 @@
 							<!--year input-->
 							<div class="large-2 columns">
 								<div class="row" style="padding-top:11px;">
-									<div class="small-3 columns">
+									<div class="large-2 small-1 columns">
 										<label class="text-right middle" for="year">Year:</label>
 									</div>
-								    <div class="small-9 columns">
+								    <div class="large-9 small-11 columns">
 								    		<input type="number" name="year" ng-model="year" min = "{{currentYear -15}}" max = "{{currentYear}}" required>
 								    </div>
 								</div>
@@ -142,7 +142,7 @@
 						
 						<!--buttons row-->
 						<div class="row">
-							<div class="small-5 small-centered columns">
+							<div class="small-9 medium-5 small-centered columns">
 								<button class="hollow button" ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}"type="button" id="go" ng-click="resize($event)" ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Resize</button>
 								<button class="hollow button"  ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}" type="button" id="save" ng-click="save()"  ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Save</button>
 								<button class="hollow button" type="button" id="settings" data-open="settingModal">Settings</button>

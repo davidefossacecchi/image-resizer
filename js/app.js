@@ -1,28 +1,3 @@
-$(document).foundation();
-var slider = document.getElementById('slider');
-
-var inputCompression = document.getElementById('compression');
-
-noUiSlider.create(slider, {
-	start: 80,
-	connect: 'lower',
-	step:1,
-	animate: true,
-	range: {
-		'min': 0,
-		'max': 100
-	}
-});
-
-slider.noUiSlider.on('update', function( values, handle ) {
-	inputCompression.value = values[handle];
-});
-
-inputCompression.addEventListener('keyup', function(){
-	slider.noUiSlider.set(this.value);
-});
-
-
 var resizer = angular.module("imageResizer", []);
 
 resizer.directive("fileread", function () {
@@ -69,6 +44,30 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 	$scope.brands = [];
 	$scope.models = [];
 	$scope.err = "";
+
+	$(document).foundation();
+	var slider = document.getElementById('slider');
+
+	var inputCompression = document.getElementById('compression');
+
+	noUiSlider.create(slider, {
+		start: 80,
+		connect: 'lower',
+		step:1,
+		animate: true,
+		range: {
+			'min': 0,
+			'max': 100
+		}
+	});
+
+	slider.noUiSlider.on('update', function( values, handle ) {
+		inputCompression.value = values[handle];
+	});
+
+	inputCompression.addEventListener('keyup', function(){
+		slider.noUiSlider.set(this.value);
+	});
 
 	var timeoutval = 4000
 
