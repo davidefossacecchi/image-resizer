@@ -1,4 +1,27 @@
 $(document).foundation();
+var slider = document.getElementById('slider');
+
+var inputCompression = document.getElementById('compression');
+
+noUiSlider.create(slider, {
+	start: 80,
+	connect: 'lower',
+	step:1,
+	animate: true,
+	range: {
+		'min': 0,
+		'max': 100
+	}
+});
+
+slider.noUiSlider.on('update', function( values, handle ) {
+	inputCompression.value = values[handle];
+});
+
+inputCompression.addEventListener('keyup', function(){
+	slider.noUiSlider.set(this.value);
+});
+
 
 var resizer = angular.module("imageResizer", []);
 
@@ -39,6 +62,7 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 	$scope.height = 1080;
 	$scope.width = 1920;
 	$scope.compression = 80;
+	$scope.crop = true;
 	$scope.zipname = "output";
 	$scope.currentYear = new Date().getFullYear();
 	$scope.year = $scope.currentYear - 5;
@@ -60,6 +84,7 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 
 	$scope.getModels = function(){
 		$scope.models = [];
+		$scope.err = "";
 		startTime = new Date().getTime();
 		$http.get("car-server.php/"+$scope.choosenBrand+"/models", {timeout: timeoutval}).then(function successCallback(response) {
 		    $scope.models = response.data;
@@ -70,7 +95,9 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 		  });
 	}
 	
-	$scope.resize = function(){
+	$scope.resize = function(event){
+		event.target.classList.toggle('disabled');
+		event.target.innerHTML = "Wait..."
 		var canvases = document.getElementsByTagName("canvas");
 		var i = 0;
 		var p_height, p_width;
@@ -112,6 +139,10 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 				}
 				i++;
 				if(i<canvases.length) scale();
+				else{
+					event.target.classList.toggle('disabled');
+					event.target.innerHTML = "Resize"
+				}
 			}
 			img.src = $scope.images[i].src;
 		})();
@@ -121,7 +152,7 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 		var canvases = document.getElementsByTagName("canvas");
 		var zip = new JSZip();
 		var compression = Math.round($scope.compression)/100;
-		alert(compression);
+		
 		var i = 0;
 		(function write(){
 			var the_canvas = canvases[i];

@@ -49,3 +49,7 @@ input:invalid:focus{
 .top-bar-left > h5{
 	display: inline;
 }
+
+#slider{
+	margin: 17px 0;
+}

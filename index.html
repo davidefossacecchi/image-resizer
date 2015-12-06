@@ -6,15 +6,13 @@
 		<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
 		<link rel="stylesheet" type="text/css" href="css/motion-ui.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		
-		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-		<script type="text/javascript" src="js/foundation.js"></script>
-		<script type="text/javascript" src="js/vendor/motion-ui.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
-		<script type="text/javascript" src="js/FileSaver.min.js"></script>
-		<script type="text/javascript" src="js/jszip.min.js"></script>
-		<script type="text/javascript" src="js/vendor/what-input.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/nouislider.css">
+		<link rel="stylesheet" type="text/css" href="css/nouislider.pips.css">
+		<link rel="stylesheet" type="text/css" href="css/nouislider.tooltips.css">
+		<script type="text/javascript" src="js/angular.min.js" defer></script>
+		<script type="text/javascript" src="js/app.js" defer></script>
+		<script type="text/javascript" src="js/FileSaver.min.js" defer></script>
+		<script type="text/javascript" src="js/jszip.min.js" defer></script>
 		
 	</head>
 	<body>
@@ -57,25 +55,22 @@
 					</div>
 
 					<div class="row">
-						<div class="small-3 columns">
+						<div class="small-4 columns">
 							<label class="text-right middle">Compression [%]:</label>
 						</div>
 						<div class="small-4 columns">
-							<div class="slider" data-slider data-initial-start="80" step="1">
-								<span class="slider-handle" data-slider-handle role="slider" tabindex="0" aria-controls="compression"></span>
-								<span class="slider-fill" data-slider-fill></span>
-							</div>
+							<div id="slider"></div>
 						</div>
 						<div class="small-2 columns">
 						  	<input type="number" id="compression" ng-model="compression" required>
 						</div>
-						<div class="small-3 columns">
-							<input id="crop" type="checkbox"  ng-model="crop"><label style="margin-left:5px;" class="middle" for="crop"> Crop</label>
+						<div class="small-2 columns">
+							<input id="crop" type="checkbox" ng-model="crop"><label style="margin-left:5px;" class="middle" for="crop"> Crop</label>
 						</div>
 					</div>
 					<div class="row">
-						<div class="small-1 small-centered columns">
-							<button class="hollow button" data-close aria-label="Close reveal" ng-class="{ 'disabled' : settingsForm.$invalid }" type="button" id="set" ng-disabled="settingsForm.$invalid">Set</button>
+						<div class="small-2 small-centered columns">
+							<button class="hollow button" data-close aria-label="Close reveal" ng-class="{'disabled' : settingsForm.$invalid }" type="button" id="set" ng-disabled="settingsForm.$invalid">Set</button>
 						</div>
 					</div>
 				</form>
@@ -141,8 +136,8 @@
 						</div>
 						
 						<div class="row">
-							<div class="small-6 small-centered columns">
-								<button class="hollow button" ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}"type="button" id="go" ng-click="resize()" ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Resize</button>
+							<div class="small-5 small-centered columns">
+								<button class="hollow button" ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}"type="button" id="go" ng-click="resize($event)" ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Resize</button>
 								<button class="hollow button"  ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}" type="button" id="save" ng-click="save()"  ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Save</button>
 								<button class="hollow button" type="button" id="settings" data-open="settingModal">Settings</button>
 							</div>
@@ -160,5 +155,10 @@
 				<canvas draw="image" ng-repeat="image in images"></canvas>
 			</div>
 		<div>
+		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+		<script type="text/javascript" src="js/nouislider.min.js"></script>
+		<script type="text/javascript" src="js/vendor/motion-ui.js"></script>
+		<script type="text/javascript" src="js/foundation.js"></script>
+
 	</body>
 </html>
