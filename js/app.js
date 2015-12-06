@@ -159,7 +159,7 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 			img.onload = function(){
 				var index = img.src.indexOf(",");
 				var data = img.src.substring(index + 1, img.src.length);
-				zip.file("image"+i+".jpeg",data,{base64:true});
+				zip.file($scope.choosenBrand+"-"+$scope.choosenModel+"-"+$scope.year+"_"+i+".jpeg",data,{base64:true});
 				i++;
 				if(i<canvases.length) write();
 				else{
