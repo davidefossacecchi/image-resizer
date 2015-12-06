@@ -8,13 +8,13 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		
 		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-		<script type="text/javascript" src="js/foundation.js" defer></script>
-		<script type="text/javascript" src="js/vendor/motion-ui.js" defer></script>
-		<script type="text/javascript" src="js/angular.min.js" defer></script>
-		<script type="text/javascript" src="js/app.js" defer></script>
-		<script type="text/javascript" src="js/FileSaver.min.js" defer></script>
-		<script type="text/javascript" src="js/jszip.min.js" defer></script>
-		<script type="text/javascript" src="js/vendor/what-input.min.js" defer></script>
+		<script type="text/javascript" src="js/foundation.js"></script>
+		<script type="text/javascript" src="js/vendor/motion-ui.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript" src="js/FileSaver.min.js"></script>
+		<script type="text/javascript" src="js/jszip.min.js"></script>
+		<script type="text/javascript" src="js/vendor/what-input.min.js"></script>
 		
 	</head>
 	<body>
@@ -153,7 +153,7 @@
 			<!-- end of output setting-->
 			<div id="thumbnails">
 				<h3 ng-if="images.length > 0">Your Pictures</h2>
-				<img class="thumbnail" ng-repeat="image in images" src="{{image.src}}"/>
+				<img class="thumbnail" ng-repeat="image in images" ng-src="{{image.src}}"/>
 			</div>
 
 			<div id="iterations">
