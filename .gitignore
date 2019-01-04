@@ -1,2 +1,2 @@
-car-server.php
 resources/cars.json
+node_modules/*

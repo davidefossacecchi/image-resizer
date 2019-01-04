@@ -13,11 +13,18 @@
         <link rel="stylesheet" type="text/css" href="css/nouislider.css">
         <link rel="stylesheet" type="text/css" href="css/nouislider.pips.css">
         <link rel="stylesheet" type="text/css" href="css/nouislider.tooltips.css">
+        
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+        <script type="text/javascript" src="js/nouislider.min.js"></script>
+        <script type="text/javascript" src="js/vendor/motion-ui.js"></script>
+        <script type="text/javascript" src="js/foundation.js"></script>
 
-        <script type="text/javascript" src="js/angular.min.js" defer></script>
-        <script type="text/javascript" src="js/app.js" defer></script>
-        <script type="text/javascript" src="js/FileSaver.min.js" defer></script>
-        <script type="text/javascript" src="js/jszip.min.js" defer></script>
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/FileSaver.min.js"></script>
+        <script type="text/javascript" src="js/jszip.min.js"></script>
+        <script>if (window.module) module = window.module;</script>
 
     </head>
     <body>
@@ -140,9 +147,5 @@
                 <canvas draw="image" ng-repeat="image in images"></canvas>
             </div>
         </div>
-        <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-        <script type="text/javascript" src="js/nouislider.min.js"></script>
-        <script type="text/javascript" src="js/vendor/motion-ui.js"></script>
-        <script type="text/javascript" src="js/foundation.js"></script>
     </body>
 </html>

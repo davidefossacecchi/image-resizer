@@ -1,0 +1,38 @@
+{
+  "name": "image_resizer",
+  "version": "1.0.0",
+  "description": "Image resizer app",
+  "main": "js/index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidefossacecchi/image-resizer.git"
+  },
+  "keywords": [
+    "Brama.",
+    "Arrugginito.",
+    "Diciassette.",
+    "Alba.",
+    "Fornace.",
+    "Nove.",
+    "Benevolo.",
+    "Ritorno",
+    "a",
+    "casa.",
+    "Uno.",
+    "Treno",
+    "merci."
+  ],
+  "author": "Davide Fossacecchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidefossacecchi/image-resizer/issues"
+  },
+  "homepage": "https://github.com/davidefossacecchi/image-resizer#readme",
+  "devDependencies": {
+    "electron": "^4.0.0"
+  }
+}
