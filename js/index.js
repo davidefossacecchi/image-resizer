@@ -1,4 +1,5 @@
 const {app, BrowserWindow} = require('electron')
+const path = require('path');
 
 // Mantiene un riferimento globale all'oggetto window, se non lo fai, la finestra sarà
 // chiusa automaticamente quando l'oggetto JavaScript sarà garbage collected.
@@ -6,7 +7,14 @@ let win
 
 function createWindow() {
     // Creazione della finestra del browser.
-    win = new BrowserWindow({width: 800, height: 600})
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        icon: path.join(__dirname, '../img/icon64.png')
+    })
+    
+    //win.webContents.openDevTools()
+    
 
     // e viene caricato il file index.html della nostra app.
     win.loadFile('index.html')
@@ -18,6 +26,8 @@ function createWindow() {
         // si dovrebbe eliminare l'elemento corrispondente.
         win = null
     })
+    
+    
 }
 
 // Questo metodo viene chiamato quando Electron ha finito
