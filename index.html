@@ -1,173 +1,148 @@
 <!doctype html>
 <html>
-	<head>
-		<!--Web App that permits to load a banch of local images and resize them-->
-		<meta charset="utf-8" />
-	    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Image Resizer</title>
-		
-		<link rel="stylesheet" type="text/css" href="css/foundation.min.css">
-		<link rel="stylesheet" type="text/css" href="css/motion-ui.css">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/nouislider.css">
-		<link rel="stylesheet" type="text/css" href="css/nouislider.pips.css">
-		<link rel="stylesheet" type="text/css" href="css/nouislider.tooltips.css">
+    <head>
+        <!--Web App that permits to load a banch of local images and resize them-->
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Image Resizer</title>
 
-		<script type="text/javascript" src="js/angular.min.js" defer></script>
-		<script type="text/javascript" src="js/app.js" defer></script>
-		<script type="text/javascript" src="js/FileSaver.min.js" defer></script>
-		<script type="text/javascript" src="js/jszip.min.js" defer></script>
-		
-	</head>
-	<body>
-		<div class="top-bar">
-			<div class="top-bar-left">
-				<img src="img/resize.png" alt="logo" /><h5>Image Resizer</h5>
-			</div>
-		</div>
-		<div class = "wrapper" ng-app="imageResizer" ng-controller="irController" ng-cloak>
-			<!-- image settings form in a modal-->
-			<div class="reveal" id="settingModal" data-reveal>
-				<form name="settingsForm">
-				  	<div class="row">
+        <link rel="stylesheet" type="text/css" href="css/foundation.min.css">
+        <link rel="stylesheet" type="text/css" href="css/motion-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/nouislider.css">
+        <link rel="stylesheet" type="text/css" href="css/nouislider.pips.css">
+        <link rel="stylesheet" type="text/css" href="css/nouislider.tooltips.css">
 
-						<!--width-->
-						<div class="medium-6 small-12 columns">
-							<div class="small-2 columns">
-								<label class="text-right middle" for="width">Width:</label>
-							</div>
-							<div class="small-9 columns">
-								<div class="input-group">
-									<input type="number" class="input-group-field" name="width" id="width" autocomplete="off" ng-model="width" required>
-									<span class="input-group-label">px</span>
-								</div>
-							</div>
-						</div>
-						<!--height-->
-						<div class="medium-6 small-12 columns">
-							<div class="small-2 columns">
-								<label class="text-right middle" for="height">Height:</label>
-							</div>
-							<div class="small-9 columns">
-								<div class="input-group">
-									<input class="input-group-field" type="number" name="height" id="height" autocomplete="off" value="1080" ng-model="height" required>
-									<span class="input-group-label">px</span>
-								</div>
-							</div>
-						</div>
-					
-					</div>
+        <script type="text/javascript" src="js/angular.min.js" defer></script>
+        <script type="text/javascript" src="js/app.js" defer></script>
+        <script type="text/javascript" src="js/FileSaver.min.js" defer></script>
+        <script type="text/javascript" src="js/jszip.min.js" defer></script>
 
-					<div class="row">
-						<div class="small-4 columns">
-							<label class="text-right middle" for="compression">Compression [%]:</label>
-						</div>
-						<div class="small-4 columns">
-							<div id="slider"></div>
-						</div>
-						<div class="small-2 columns">
-						  	<input type="number" id="compression" name="compression" min="0" max="100" ng-model="compression" required>
-						</div>
-						<div class="small-2 columns">
-							<input id="crop" type="checkbox" ng-model="crop"><label style="margin-left:5px;" class="middle" for="crop"> Crop</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="small-2 small-centered columns">
-							<button class="hollow button" data-close aria-label="Close reveal" ng-class="{'disabled' : settingsForm.$invalid }" type="button" id="set" ng-disabled="settingsForm.$invalid">Set</button>
-						</div>
-					</div>
-				</form>
-				
-			  
-			</div>
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <img src="img/resize.png" alt="logo" /><h5>Image Resizer</h5>
+            </div>
+        </div>
+        <div class = "wrapper" ng-app="imageResizer" ng-controller="irController" ng-cloak>
+            <!-- image settings form in a modal-->
+            <div class="reveal" id="settingModal" data-reveal>
+                <form name="settingsForm">
+                    <div class="row">
 
-			<!--modal end-->
+                        <!--width-->
+                        <div class="medium-6 small-12 columns">
+                            <div class="small-2 columns">
+                                <label class="text-right middle" for="width">Width:</label>
+                            </div>
+                            <div class="small-9 columns">
+                                <div class="input-group">
+                                    <input type="number" class="input-group-field" name="width" id="width" autocomplete="off" ng-model="width" required>
+                                    <span class="input-group-label">px</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--height-->
+                        <div class="medium-6 small-12 columns">
+                            <div class="small-2 columns">
+                                <label class="text-right middle" for="height">Height:</label>
+                            </div>
+                            <div class="small-9 columns">
+                                <div class="input-group">
+                                    <input class="input-group-field" type="number" name="height" id="height" autocomplete="off" value="1080" ng-model="height" required>
+                                    <span class="input-group-label">px</span>
+                                </div>
+                            </div>
+                        </div>
 
-			<!--output settings-->
-			<form name="outputForm">
-				<div class="row">
-					<div class="medium-10 small-centered columns">
-						<!--small error message for ajax network problems-->
-						<div ng-show = 'err !=""' class="alert callout">
-						  <button ng-click = 'err = ""' class="close-button" aria-label="Close alert" type="button">
-						    <span aria-hidden="true">&times;</span>
-						  </button>
-						  <p>{{err}}</p>
+                    </div>
 
-						</div>
-						<div class="row">
-							<div class="fileUpload hollow button large-2 columns">
-			    				<span>Choose Files</span>
-			    				<input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" fileread = "images" multiple required>
-							</div>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <label class="text-right middle" for="compression">Compression [%]:</label>
+                        </div>
+                        <div class="small-4 columns">
+                            <div id="slider"></div>
+                        </div>
+                        <div class="small-2 columns">
+                            <input type="number" id="compression" name="compression" min="0" max="100" ng-model="compression" required>
+                        </div>
+                        <div class="small-2 columns">
+                            <input id="crop" type="checkbox" ng-model="crop"><label style="margin-left:5px;" class="middle" for="crop"> Crop</label>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="small-2 small-centered columns">
+                                <button class="hollow button" data-close aria-label="Close reveal" ng-class="{'disabled' : settingsForm.$invalid }" type="button" id="set" ng-disabled="settingsForm.$invalid">Set</button>
+                            </div>
+                        </div>
+                </form>
 
-							<!--brand selector-->
-							<div class="large-4 columns">
-								<div class="row" style="padding-top:11px;">
-									<div class="large-3 small-1 columns">
-										<label class="text-right middle" for="brand">Brand:</label>
-									</div>
-								    <div class="large-9 small-11 columns">
-							    		<select ng-change = "getModels()" ng-model="choosenBrand" name="brand" ng-options="brand as brand for brand in brands" required></select>
-								    </div>
-								</div>
-							</div>
 
-							<!--model selector-->
-							<div class="large-4 columns">
-								<div class="row" style="padding-top:11px;">
-									<div class="large-3 small-1 columns">
-										<label class="text-right middle" for="model">Model:</label>
-									</div>
-								    <div class="large-9 small-11 columns">
-								    		<select ng-model="choosenModel" name="model" ng-options="model as model for model in models" ng-disabled="models.length < 1" required></select>
-								    </div>
-								</div>
-							</div>
+            </div>
 
-							<!--year input-->
-							<div class="large-2 columns">
-								<div class="row" style="padding-top:11px;">
-									<div class="large-2 small-1 columns">
-										<label class="text-right middle" for="year">Year:</label>
-									</div>
-								    <div class="large-9 small-11 columns">
-								    		<input type="number" name="year" ng-model="year" min = "{{currentYear -15}}" max = "{{currentYear}}" required>
-								    </div>
-								</div>
-							</div>
-						</div>
-						
-						<!--buttons row-->
-						<div class="row">
-							<div class="small-9 medium-5 small-centered columns">
-								<button class="hollow button" ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}"type="button" id="go" ng-click="resize($event)" ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Resize</button>
-								<button class="hollow button"  ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}" type="button" id="save" ng-click="save()"  ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Save</button>
-								<button class="hollow button" type="button" id="settings" data-open="settingModal">Settings</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-			<!-- end of output setting-->
+            <!--modal end-->
 
-			<!--thumbnails container-->
-			<div id="thumbnails">
-				<h3 ng-if="images.length > 0">Your Pictures</h2>
-				<img class="thumbnail" ng-repeat="image in images" ng-src="{{image.src}}"/>
-			</div>
+            <!--output settings-->
+            <form name="outputForm">
+                <div class="row">
+                    <div class="medium-10 small-centered columns">
+                        <!--small error message for ajax network problems-->
+                        <div ng-show = 'err !=""' class="alert callout">
+                          <button ng-click = 'err = ""' class="close-button" aria-label="Close alert" type="button">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <p>{{err}}</p>
 
-			<!--canvases container-->
-			<div id="iterations">
-				<canvas draw="image" ng-repeat="image in images"></canvas>
-			</div>
-		<div>
-		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-		<script type="text/javascript" src="js/nouislider.min.js"></script>
-		<script type="text/javascript" src="js/vendor/motion-ui.js"></script>
-		<script type="text/javascript" src="js/foundation.js"></script>
+                        </div>
+                            <div class="row">
+                                <div class="fileUpload hollow button large-2 columns">
+                                    <span>Choose Files</span>
+                                    <input type="file" class="upload" id = "files" accept="image/*" autocomplete="off" data-fileread = "images" multiple required>
+                                </div>
 
-	</body>
+                                <!--brand selector-->
+                                <div class="large-8 columns">
+                                    <div class="row" style="padding-top:11px;">
+                                        <div class="large-2 small-1 columns">
+                                            <label class="text-right middle" for="name">Name:</label>
+                                        </div>
+                                        <div class="large-9 small-11 columns">
+                                            <input type="text" name="name" ng-model="name" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--buttons row-->
+                            <div class="row">
+                                <div class="small-9 medium-5 small-centered columns">
+                                        <button class="hollow button" ng-class="{ 'disabled' : outputForm.$invalid || settingsForm.$invalid || images.length < 1}"type="button" id="go" ng-click="resize($event)" ng-disabled="outputForm.$invalid || settingsForm.$invalid || images.length < 1">Resize</button>
+                                        <button class="hollow button" type="button" id="settings" data-open="settingModal">Settings</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+            <!-- end of output setting-->
+
+            <!--thumbnails container-->
+            <div id="thumbnails">
+                <h3 ng-if="images.length > 0">Your Pictures</h2>
+                <img class="thumbnail" ng-repeat="image in images" ng-src="{{image.src}}"/>
+            </div>
+
+            <!--canvases container-->
+            <div id="iterations">
+                <canvas draw="image" ng-repeat="image in images"></canvas>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+        <script type="text/javascript" src="js/nouislider.min.js"></script>
+        <script type="text/javascript" src="js/vendor/motion-ui.js"></script>
+        <script type="text/javascript" src="js/foundation.js"></script>
+    </body>
 </html>

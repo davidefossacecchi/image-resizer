@@ -69,30 +69,12 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 		slider.noUiSlider.set(this.value);
 	});
 
-	var timeoutval = 4000
+	
 
 	var startTime = new Date().getTime();
 	
-	$http.get("car-server.php/brands", {timeout: timeoutval}).then(function successCallback(response) {
-		    $scope.brands = response.data;
-		  }, function errorCallback(response) {
-		  	var respTime = new Date().getTime();
-		  	if(respTime > startTime + timeoutval) $scope.err = "Can't retrieve cars data, please check your connection and try again";
-		  	else  $scope.err = "Oops, an error occured while retrieving cars data, please try again";
-		  });
-
-	$scope.getModels = function(){
-		$scope.models = [];
-		$scope.err = "";
-		startTime = new Date().getTime();
-		$http.get("car-server.php/"+$scope.choosenBrand+"/models", {timeout: timeoutval}).then(function successCallback(response) {
-		    $scope.models = response.data;
-		  }, function errorCallback(response) {
-		  	var respTime = new Date().getTime();
-		  	if(respTime > startTime + timeoutval) $scope.err = "Can't retrieve cars data, please check your connection and try again";
-		    else  $scope.err = "Oops, an error occured while retrieving cars data, please try again";
-		  });
-	}
+	
+	
 	
 	$scope.resize = function(event){
 		event.target.classList.toggle('disabled');
@@ -139,15 +121,16 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 				i++;
 				if(i<canvases.length) scale();
 				else{
-					event.target.classList.toggle('disabled');
-					event.target.innerHTML = "Resize"
+                                    save();
+                                    event.target.classList.toggle('disabled');
+                                    event.target.innerHTML = "Resize";
 				}
 			}
 			img.src = $scope.images[i].src;
 		})();
 	};
 
-	$scope.save = function(){
+	function save(){
 		var canvases = document.getElementsByTagName("canvas");
 		var zip = new JSZip();
 		var compression = Math.round($scope.compression)/100;
@@ -159,12 +142,12 @@ resizer.controller("irController", ["$scope", "$http", function($scope, $http){
 			img.onload = function(){
 				var index = img.src.indexOf(",");
 				var data = img.src.substring(index + 1, img.src.length);
-				zip.file($scope.choosenBrand+"-"+$scope.choosenModel+"-"+$scope.year+"_"+i+".jpeg",data,{base64:true});
+				zip.file($scope.name + "_" + i + ".jpeg",data,{base64:true});
 				i++;
 				if(i<canvases.length) write();
 				else{
 					var content = zip.generate({type:"blob"});
-					saveAs(content, $scope.choosenBrand+"-"+$scope.choosenModel+"-"+$scope.year+".zip");
+					saveAs(content, $scope.name + ".zip");
 				}
 			}
 			img.src = the_canvas.toDataURL("image/jpeg", compression);
